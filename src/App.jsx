@@ -15,11 +15,14 @@ function App() {
   const [message, setMessage] = useState("");
   const [placingOrder, setPlacingOrder] = useState(false);
 
-  const [customer, setCustomer] = useState({
-    name: "",
-    phone: "",
-    address: "",
-  });
+  
+const [customer, setCustomer] = useState({
+  name: "",
+  phone: "",
+  address: "",
+  paymentMethod: "upi",
+});
+
   
 const [customCake, setCustomCake] = useState({
   name: "",
@@ -150,8 +153,9 @@ const filteredProducts = products.filter((product) => {
         phone: customer.phone.trim(),
         delivery_address: customer.address.trim(),
         items: orderItems,
-        total_amount: totalPrice,
-        status: "Pending",
+       total_amount: totalPrice,
+       payment_method: customer.paymentMethod,
+       status: "Pending",
       },
     ]);
 
@@ -761,6 +765,31 @@ const handleCustomCakeSubmit = async (event) => {
                     rows={3}
                     placeholder="Where should we deliver your treats?"
                   />
+                 
+<label htmlFor="payment-method">Choose payment method</label>
+<select
+  id="payment-method"
+  value={customer.paymentMethod || "upi"}
+  onChange={(event) =>
+    setCustomer({
+      ...customer,
+      paymentMethod: event.target.value,
+    })
+  }
+  required
+>
+  <option value="upi">UPI (Demo payment)</option>
+  <option value="cod">Cash on Delivery</option>
+</select>
+
+<div className="payment-note" role="status">
+  {customer.paymentMethod === "upi" ? (
+    <p>💗 Demo UPI selected — no real payment will be made.</p>
+  ) : (
+    <p>🍰 Cash on Delivery selected — pay when your order arrives.</p>
+  )}
+</div>
+
 
                   <button
                     className="primary-button checkout-button"

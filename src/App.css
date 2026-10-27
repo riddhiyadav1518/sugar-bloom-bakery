@@ -1518,8 +1518,7 @@ textarea:focus-visible {
   }
 }
 
-```css
-/* Additional mobile usability improvements */
+
 
 /* Prevent long text and layouts from causing horizontal scrolling */
 html,
